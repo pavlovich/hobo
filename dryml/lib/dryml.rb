@@ -199,7 +199,7 @@ private
 
   def subsite_taglibs(controller_path)
     parts = controller_path.split("/")
-    subsite = parts.length >= 2 ? parts[0..-2].join('_') : "front"
+    subsite = parts.length >= 2 ? parts[0..-2].join('_') : 'public' # "front"
     src = "taglibs/#{subsite}_site"
     Object.const_defined?(:Rails) && File.exists?("#{Rails.root}/app/views/#{src}.dryml") ?
       taglibs_in_dir("#{subsite}_site").unshift({ :src => src }) : [APPLICATION_TAGLIB]
