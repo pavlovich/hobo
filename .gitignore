@@ -3,7 +3,7 @@
 hobo/taglib-docs
 
 */pkg
-
+.idea/
 dryml/lib/doc
 dryml/tmp
 dryml/doc
