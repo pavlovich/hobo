@@ -11,8 +11,11 @@ class Module
     yield(aliased_target, punctuation) if block_given?
     without = "#{aliased_target}_without_#{feature}#{punctuation}"
     unless method_defined?(without)
-      alias_method without, target
-      alias_method target, "#{aliased_target}_with_#{feature}#{punctuation}"
+      begin
+        alias_method without, target
+        alias_method target, "#{aliased_target}_with_#{feature}#{punctuation}"
+      rescue
+        # skip aliasing method as the target method probably does not exist.
     end
   end
 

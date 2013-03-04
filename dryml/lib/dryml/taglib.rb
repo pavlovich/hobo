@@ -120,8 +120,10 @@
                                            end
           end
         else
-          class_or_module.send(:include, @module)
-          class_or_module.tag_attrs.update(@module.tag_attrs) if @module.respond_to?(:tag_attrs)
+          if @module
+            class_or_module.send(:include, @module)
+            class_or_module.tag_attrs.update(@module.tag_attrs) if @module.respond_to?(:tag_attrs)
+          end
         end
       end
 
