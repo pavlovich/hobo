@@ -16,6 +16,7 @@ class Module
         alias_method target, "#{aliased_target}_with_#{feature}#{punctuation}"
       rescue
         # skip aliasing method as the target method probably does not exist.
+      end
     end
   end
 
