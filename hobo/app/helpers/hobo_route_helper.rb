@@ -5,8 +5,8 @@ module HoboRouteHelper
 
       unless Rails.configuration.hobo.dont_emit_deprecated_routes
         old_ = object_url_old(obj, *args)
-        debugger if old_ != new_
-        Rails.logger.debug "new style url #{new_} does not match old style url #{old_}. obj: #{obj.inspect}.  args: #{args.inspect}.  backtrace: #{caller.inspect}" if old_ != new_
+        #debugger if old_ != new_
+        #Rails.logger.debug "new style url #{new_} does not match old style url #{old_}. obj: #{obj.inspect}.  args: #{args.inspect}.  backtrace: #{caller.inspect}" if old_ != new_
       end
       new_
     end
