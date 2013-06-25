@@ -268,7 +268,7 @@ Here the `<body>` tag is a `param`, and so are the two `<div>` tags inside it. T
     <page>
       <body:> ... page content goes here ... </body:>
     </page>
-{.dryml}    
+{.dryml}
 
 Or like this:
 
@@ -300,7 +300,7 @@ Now there is no need to give a parameter tag in the call at all - the content di
     <page> ... body content goes here -- no need for a parameter tag ... </page>
     
 You might notice that the `<page>` tag is now indistinguishable from a normal HTML tag. Some find this aspect of DRYML disconcerting at first -- how can you tell what is an HTML tag and what it a defined DRYML tag? The answer is -- you can't, and that's quite deliberate. This allows you to do nice tricks like define your own smart `<form>` tag or `<a>` tag (the Rapid library does exactly that). Other tag-based template languages (e.g. Java's JSP) like to put everything in XML namespaces. The result is very cluttered views that are boring to type and hard to read. From the start we put a very high priority on making DRYML templates compact and elegant. When you're new to DRYML you might have to do a lot of looking things up, as you would with any new language or API, but things gradually become familiar and then view templates can be read and understood very easily.
-{.aside}    
+{.aside}
 
 
 # The Implicit Context
@@ -349,7 +349,7 @@ Now we'll create the page. Let's assume we're using a `<page>` tag along the lin
 
 When you see a tag like `<view:title/>`, you don't get any prizes for guessing what will be displayed. In terms of what actually happens, you can read this as "change the context to be the `title` attribute of the current context, then call the `<view`> tag". You might like to think of that change to the context as `this = this.title` (although in fact `this` is not assignable). But really you just think of it as "view the title". Of what? Of whatever is in context, in this case the blog post.
 
-Be careful with the two different uses of colon in DRYML. A trailing colon as in `<foo:>` indicates a parameter tag, whereas a colon joining two names as in `<view:title/>` indicates a change of context.
+Be careful with the two different uses of colon in DRYML. A trailing colon as in `<foo:>` indicates a parameter tag, whereas a colon joining two names as in `<view:title/>` indicates the `<view>` call with the change of context.
 
 When the tag ends, the context is set back to what it was. In the case of `<view/>` which is a self-closing tag familiar from XML, that happens immediately. The `<l:author>` tag is more interesting. We set the context to be the author, so that the link goes to the right place. Inside the `<l:author>` that context remains in place so we just need `<view:name/>` in order to display the author's name.
 
@@ -406,7 +406,7 @@ Sometimes you want to drill down through several fields at a time. Both the `fie
 
 When you change the context using `field="my-field"` (or the `<tag:my-field>` shorthand), the previous context is available as `this_parent`, and the name of the field is available as `this_field`. If you set the context using `with="..."`, these values are not available. That means the following apparently identical tag calls are not quite the same:
 
-    <my-btag with="&@post.title"/>
+    <my-tag with="&@post.title"/>
 
 is not quite the same as:
 
@@ -433,7 +433,7 @@ collection.
     <repeat:foos>
       <td><%= this_field %></td>
       <td><view /></td>
-    </repeat>
+    </repeat:foos>
 
 ## Forms
 
@@ -770,7 +770,7 @@ To achieve that on one page, we could call the `<page>` tag like this:
       <append-heading:> -- The Hobo Blog</append-heading:>
       <body:>
         ...
-      </body>
+      </body:>
     </page>
 {.dryml}
 
@@ -779,7 +779,7 @@ Or we could go a step further and create a new page tag that added that suffix a
     <def tag="blog-page">
       <page>
         <append-heading:> -- The Hobo Blog</append-heading:>
-        <body: param></body>
+        <body: param></body:>
       </page>
     </def>
 {.dryml}
@@ -1149,7 +1149,7 @@ If, for a given call, no type-specific definition is available for `this.class`,
 
 ## Specifying the type explicitly
 
-Sometimes it is useful to give the type explicitly for the call explicitly (i.e., to override the use of `this.class`). The `for-type` attribute (on the call) provides this facility. For example, you might want to implement one type-specific definition in terms of another:
+Sometimes it is useful to give the type for the call explicitly (i.e., to override the use of `this.class`). The `for-type` attribute (on the call) provides this facility. For example, you might want to implement one type-specific definition in terms of another:
 
     <def tag="card" for="SpecialProduct">
       <card for-type="Product"><append-price:> (Today Only!)</append-price:></card>
@@ -1182,7 +1182,7 @@ Once or twice in the previous examples, we have extended our card tag definition
 
 There's a bit of repetition there -- `<%= h this.to_s %>` was already present in the original definition. All we really wanted to do was wrap the existing heading in an `<a>`. In this case there wasn't much markup to repeat, so it wasn't a big deal, but in other cases there might be much more.
     
-We can't use `<prepend-heading:><a></prepend-heading:>` and `<append-heading:></a></append-heading:>` because that's not well formed markup (and is very messy besides). Instead, DRYML has a specific feature for this situation. The <`param-content`> tag is a special tag that brings back the default content for a parameter. Here's how it works:
+We can't use `<prepend-heading:><a></prepend-heading:>` and `<append-heading:></a></append-heading:>` because that's not well formed markup (and is very messy besides). Instead, DRYML has a specific feature for this situation. The `<param-content>` tag is a special tag that brings back the default content for a parameter. Here's how it works:
 
     <card>
       <heading:><a href="#{object_url this}"><param-content for="heading"/></a></heading:>
@@ -1218,7 +1218,7 @@ To use DRYML terminology, what we've done there is *replaced* the entire heading
     </card>
 {.dryml}
     
-To summarise, to wrap content inside a parameter, use <`param-content/`>. To wrap an entire parameter, including the parameterised tag itself (the `<h3>` in our examples), use the `replace` and `restore` attributes.
+To summarise, to wrap content inside a parameter, use `<param-content/>`. To wrap an entire parameter, including the parameterised tag itself (the `<h3>` in our examples), use the `replace` and `restore` attributes.
     
 
 # Local variables and scoped variables.
@@ -1256,10 +1256,10 @@ As an example of their use, let's define a simple tag for rendering navigation l
 
 On our pages, we'd like to simply call, say:
 
-    `<main-nav current="Home">`
+    <main-nav current="Home">
 {.dryml}
 
-And we'd like it to be easy to define our own <`main-nav`> tag in our applications:
+And we'd like it to be easy to define our own `<main-nav>` tag in our applications:
 
     <def tag="main-nav">
       <navigation merge-attrs>

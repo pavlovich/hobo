@@ -68,7 +68,7 @@ So for example, to specify that you must be logged in to create a record:
 It's also common to compare the `acting_user` with associations on your model, for example, say your model has an owner:
 
     belongs_to :owner, :class_name => "User"
-{.ruby}   
+{.ruby}
 
 You can assert that only the owner can make changes like this:
 
@@ -89,7 +89,7 @@ There is a downside to that method -- the `owner` association will be fetched fr
 
 When deciding if an update is permitted (i.e. in the `update_permitted?` method), it will often be important to know what exactly has changed. In a previous version of Hobo we had to jump through a lot of hoops to make this information available. No longer -- Active Record now tracks all changes made to an object. For example, say you wish to find out about changes to an attribute `status`. The following methods (among others) are available:
 
- - `status_changed?` - returns true iff the attribute has been changed
+ - `status_changed?` - returns true if the attribute has been changed
  - `status_was` - returns the old value of the attribute
  
 Note that these methods are only available on attributes, not on associations. However, as a convenience Hobo models add `*_changed?` for all `belongs_to` associations.
@@ -421,7 +421,7 @@ Often we would like to initialise some aspect of our model based on who the `act
 
     belongs_to :owner, :class_name => "User"
     
-    after_user_new { |r| r.owner = r.acting_user }
+    def after_user_new { |r| r.owner = r.acting_user }
 {.ruby}
 
 Note that `after_user_new` fires on both `user_new` and `user_create.`
@@ -436,7 +436,7 @@ Other situations can be more complex, and the `:creator => true` shorthand may n
     class Event 
       belongs_to :group
       
-      after_user_new { |event| event.group = event.acting_user.group }
+      def after_user_new { |event| event.group = event.acting_user.group }
     end
 {.ruby}
 
@@ -452,7 +452,7 @@ This definition says that a user can only create an event in their own group.
 
 When we combine the two...
 
-    after_user_new { |event| event.group = event.acting_user.group }
+    def after_user_new { |event| event.group = event.acting_user.group }
 
     def create_permitted?
       acting_user.group == group

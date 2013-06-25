@@ -34,7 +34,7 @@ To remove the automatic relationship, you can pass nil:
 
 {.ruby}
 
-The a collection of the user's recipes will be added to the main content of `users/show`.
+The collection of the user's recipes will be added to the main content of `users/show`.
 
 You can declare additional child relationships. The order is significant, with the first in the list being the "primary collection". For example:
 
@@ -52,7 +52,7 @@ With this declaration, the user's show-page will be given an aside section (side
 
 The view-hints API is used internally by Hobo Rapid. You may not ever need to use it yourself. For completeness it is documented here.
 
-The view-hints for any model can be access using the `view_hints` method:
+The view-hints for any model can be accessed using the `view_hints` method:
 
     MyModel.view_hints
 {.ruby}
